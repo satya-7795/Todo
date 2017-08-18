@@ -1,0 +1,151 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body>
+<p>To be updated</p>
+<div id="tmp"> </div>
+
+<ul id="ct"></ul>
+
+<button onclick="window.location.href='createtodo.html'">Create ToDo</button>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    function getLists() {
+        $.getJSON('http://0.0.0.0:8080/displaytodos', function(data) {
+            document.getElementById("tmp").innerHTML = data["assigned"];
+            console.log(data["unassigned"]);
+        });
+    }
+    getLists();
+</script>
+</body>
+</html> --->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body role="document" style="height: 100%">
+<button onclick="window.location.href='createtodo.html'">Create ToDo</button>
+<button onclick="window.location.href='/logout'" style="float: right;">Logout</button>
+<div class="row" style="margin-right: 0;margin-left: 0">
+    <div class="col-md-4" id="unassigned">
+    </div>
+    <div class="col-md-4" id="assigned">
+    </div>
+    <div class="col-md-4" id="completed">
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    function getLists() {
+        $.getJSON('http://0.0.0.0:8080/displaytodos', function(data) {
+            arrAssigned = data["assigned"];
+            var l = arrAssigned.length;
+            var str = "<div>";
+            for(var i=0;i<l;i++){
+                str += "<div>User:" + arrAssigned[i]["users"][0]["userName"] + "</div>"
+                str += "<div>" + arrAssigned[i]["msg"] + "</div>"
+                str += "<button id="+ arrAssigned[i]["id"] +" onclick='complete(this)'>Complete</button>"
+                str += "<button id="+ arrAssigned[i]["id"] +":assigned onclick='deleteTodo(this)'>Delete</button>"
+            }
+            str += "</div>";
+            document.getElementById("assigned").innerHTML = str;
+            arrUnassigned = data["unassigned"];
+            var l = arrUnassigned.length;
+            var str = "<div>";
+            for(var i=0;i<l;i++){
+                str += "<div>" + arrUnassigned[i]["msg"] + "</div>"
+                str += "<button id="+ arrUnassigned[i]["id"] +" onclick = 'take(this)'>Take</button>"
+                str += "<button id="+ arrUnassigned[i]["id"] +":unassigned onclick='deleteTodo(this)'>Delete</button>"
+            }
+            str += "</div>";
+            document.getElementById("unassigned").innerHTML = str;
+            arrCompleted = data["completed"];
+            var l = arrCompleted.length;
+            var str = "<div>";
+            for(var i=0;i<l;i++){
+                str += "<div>User:" + arrCompleted[i]["users"][0]["userName"] + "</div>"
+                str += "<div>" + arrCompleted[i]["msg"] + "</div>"
+                str += "<button id="+ arrCompleted[i]["id"] +":completed onclick='deleteTodo(this)'>Delete</button>"
+            }
+            str += "</div>";
+            document.getElementById("completed").innerHTML = str;
+        });
+    }
+
+    function deleteTodo(button){
+        console.log(button.id);
+        var http = new XMLHttpRequest();
+        var url =  "deletetodo?";
+        var params = "id=" + button.id;
+        http.open("GET", url+params, true);
+
+        //Send the proper header information along with the request
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        http.onreadystatechange = function() {
+        }
+        http.send(params);
+    }
+    function complete(button) {
+
+        var http = new XMLHttpRequest();
+        var url =  "completetodo?";
+        var params = "id=" + (button.id).toString();
+        http.open("GET", url+params, true);
+
+        //Send the proper header information along with the request
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        http.onreadystatechange = function() {
+        }
+        http.send(params);
+    }
+    function take(button) {
+
+        var http = new XMLHttpRequest();
+        var url =  "assigntodo?";
+        var params = "id=" + (button.id).toString();
+        http.open("GET", url+params, true);
+
+        //Send the proper header information along with the request
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        http.onreadystatechange = function() {
+        }
+        http.send(params);
+    }
+    /*function main() {
+        console.log("In main");
+        var http = new XMLHttpRequest();
+        var url =  "main";
+        var params = "";//"id=" + (button.id).toString();
+        http.open("GET", url, true);
+
+        //Send the proper header information along with the request
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        http.onreadystatechange = function() {
+        }
+        http.send(params);
+    }
+    main();*/
+    getLists();
+    setInterval(getLists, 3000);
+</script>
+</body>
+</head>
+</html>

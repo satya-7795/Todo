@@ -1,0 +1,46 @@
+#page-header{
+    height:50px;
+    float:center;
+    font-size: 40px;
+}
+
+#add-task-button{
+    height: 50px;
+    float: right;
+    width: 50%;
+    font-size: 30px;
+}
+
+#header{
+    background-color: coral;
+}
+
+.section{
+    text-align:center;
+    padding : 40px;
+}
+
+.section-header{
+
+}
+
+#unassigned-block{
+    background-color:white;
+}
+
+#assigned-block{
+    background-color: blanchedalmond;
+}
+
+#completed-block{
+    background-color: darkseagreen;
+}
+img{
+    height:10px;
+    width:10px;
+    float:right;
+}
+
+.todo-title{
+    height:35px;
+}
