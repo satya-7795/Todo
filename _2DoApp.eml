@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_5" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="tomcat" scope="COMPILE">
+		<srcroot url="file://$USER_HOME$/Applications/tomcat/webapps/docs/appdev/sample/src"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/webapps/examples/WEB-INF/classes"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/webapps/examples/WEB-INF/jsp/applet"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/webapps/examples/jsp/plugin/applet"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/webapps/hello/WEB-INF/classes"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/webapps/todoapp/WEB-INF/classes"/>
+		<srcroot bind="false" url="file://$USER_HOME$/Applications/tomcat/work/Catalina/localhost/ROOT"/>
+	</lib>
+	<lib name="Maven: junit:junit:3.8.1" scope="TEST"/>
+	<lib name="Maven: javax.servlet:servlet-api:2.5" scope="PROVIDED"/>
+	<levels>
+		<level name="Maven: junit:junit:3.8.1" value="project"/>
+		<level name="Maven: javax.servlet:servlet-api:2.5" value="project"/>
+		<level name="Maven: com.google.code.gson:gson:2.3" value="project"/>
+	</levels>
+</component>

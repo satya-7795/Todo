@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: com.google.code.gson:gson:2.3">
+    <archive path="/Users/venkata.d/.m2/repository/com/google/code/gson/gson/2.3/gson-2.3.jar" />
+  </library>
+  <library name="Maven: javax.servlet:servlet-api:2.5">
+    <archive path="/Users/venkata.d/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" />
+  </library>
+  <library name="Maven: junit:junit:3.8.1">
+    <archive path="/Users/venkata.d/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar" />
+  </library>
+</eclipse-userlibraries>
+

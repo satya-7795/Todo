@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/_2DoApp/src/main/resources"/>
+	<classpathentry kind="src" path="/_2DoApp/src/main/java"/>
+	<classpathentry exported="true" kind="var" path="USER_HOME/Applications/tomcat" sourcepath="/USER_HOME/Applications/tomcat/webapps/docs/appdev/sample/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: junit:junit:3.8.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: javax.servlet:servlet-api:2.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: com.google.code.gson:gson:2.3"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

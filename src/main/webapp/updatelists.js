@@ -1,15 +1,21 @@
-var arrAssigned = [];
-var arrUnassigned = [];
-var arrCompleted = [];
-
-function getLists() {
-    $.getJSON('/displaytodos?start=0', function(data) {
-        arrAssigned = data["assigned"];
-        arrUnassigned = data["unassigned"];
-        arrCompleted = data["completed"];
-        displayTodos();
-    });
+function updateTodo(array1, array2, array3){
+    array1 = array1.filter( function( el ) {
+        var tmp = array3.hasOwnProperty(el.id);
+        if(tmp){
+            array2.push(array3[el.id]);
+        }
+        return !tmp;
+    } );
+    return array1;
 }
+
+function deleteElements(array1, array2){
+    array1 = array1.filter( function( el ) {
+        return !array2.includes(el.id);
+    } );
+    return array1;
+}
+
 
 function updateLists() {
     $.getJSON('/displaytodos?start=1', function(data) {
@@ -35,6 +41,3 @@ function updateLists() {
     });
 
 }
-
-getLists();
-setInterval(updateLists, 3000);

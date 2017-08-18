@@ -6,52 +6,57 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>ServletDemo</servlet-name>
-    <servlet-class>com.satya.servlets.ServletDemo</servlet-class>
+    <servlet-class>servlets.ServletDemo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Register</servlet-name>
-    <servlet-class>Register</servlet-class>
+    <servlet-class>servlets.Register</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Login</servlet-name>
-    <servlet-class>Login</servlet-class>
+    <servlet-class>servlets.Login</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>EditToDo</servlet-name>
-    <servlet-class>EditToDo</servlet-class>
+    <servlet-class>servlets.EditToDo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>DisplayToDos</servlet-name>
-    <servlet-class>DisplayToDos</servlet-class>
+    <servlet-class>servlets.DisplayToDos</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>DisplayToDo</servlet-name>
-    <servlet-class>DisplayToDo</servlet-class>
+    <servlet-class>servlets.DisplayToDo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>DeleteToDo</servlet-name>
-    <servlet-class>DeleteToDo</servlet-class>
+    <servlet-class>servlets.DeleteToDo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>CreateToDo</servlet-name>
-    <servlet-class>CreateToDo</servlet-class>
+    <servlet-class>servlets.CreateToDo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>CompleteTodo</servlet-name>
-    <servlet-class>CompleteTodo</servlet-class>
+    <servlet-class>servlets.CompleteTodo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>AssignTodo</servlet-name>
-    <servlet-class>AssignTodo</servlet-class>
+    <servlet-class>servlets.AssignTodo</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Logout</servlet-name>
-    <servlet-class>Logout</servlet-class>
+    <servlet-class>servlets.Logout</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FetchJs</servlet-name>
+    <servlet-class>servlets.FetchJs</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Main</servlet-name>
-    <servlet-class>Main</servlet-class>
+    <servlet-class>servlets.Main</servlet-class>
   </servlet>
+
 
   <servlet-mapping>
     <servlet-name>ServletDemo</servlet-name>
@@ -88,6 +93,10 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FetchJs</servlet-name>
+    <url-pattern>/fetchjs</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Main</servlet-name>
