@@ -22,7 +22,7 @@ public class FetchJs extends HttpServlet {
         response.setContentType("application/javascript");
         ArrayList fileList = getFileList(request.getParameter("fileList"));
         String combinedFile = getCombinedFile(fileList);
-        System.out.println("Combined JavaScript " + combinedFile);
+        //System.out.println("Combined JavaScript " + combinedFile);
         String outputJavaScript = combinedFile;
         response.getWriter().println(outputJavaScript);
     }
@@ -40,7 +40,7 @@ public class FetchJs extends HttpServlet {
         StringBuffer combinedJavaScript = new StringBuffer();
         for (int i = 0; i < fileList.size(); i++) {
             String fileName = (String) fileList.get(i);
-            System.out.println("Read the file " + fileName);
+            //System.out.println("Read the file " + fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     getServletContext().getResourceAsStream(fileName)));
             String line = null;

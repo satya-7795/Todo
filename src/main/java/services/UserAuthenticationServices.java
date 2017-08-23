@@ -2,6 +2,8 @@ package services;
 
 import constants.Constants;
 import javafx.util.Pair;
+import objects.AbstractDataStore;
+import objects.DB;
 import objects.Store;
 import objects.User;
 
@@ -15,18 +17,25 @@ import java.util.UUID;
 import static services.Utility.getUser;
 
 public class UserAuthenticationServices {
+    private static AbstractDataStore getContainer(){
+        if(Constants.USEDB.getValue().equals("true")){
+            return DB.getInstance();
+        }else{
+            return Store.getInstance();
+        }
+    }
     public static void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter(Constants.USERNAME.getValue());
         String password = request.getParameter(Constants.PASSWORD.getValue());
-        User user = Store.getInstance().findUser(userName);
+        User user = getContainer().findUser(userName);
         if(user == null){
             ///Redirect to login page
             //No user
             response.sendRedirect(Constants.LOGINPAGE.getValue());
         }
-        else if(user!=null && user.getPassword().equals(password)){
+        else if(user.getPassword().equals(password)){
             String token = UUID.randomUUID().toString();
-            Store.getInstance().getUserTokenMap().put(token,userName);
+            getContainer().putCookie(token,userName);
             response.addCookie(new Cookie(Constants.USERNAME.getValue(), userName));
             response.addCookie(new Cookie(Constants.TOKEN.getValue(), token));
             response.sendRedirect(Constants.MAINPAGE.getValue());
@@ -40,11 +49,11 @@ public class UserAuthenticationServices {
     public static void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Pair<String, String> p = getUser(request);
         String tmpName = p.getKey(), tmpToken = p.getValue();
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             response.sendRedirect(Constants.LOGINPAGE.getValue());
         }
 
-        if(Store.getInstance().clearUserData(tmpName, tmpToken)){
+        if(getContainer().clearUserData(tmpName, tmpToken)){
             //Deletion succeded
             response.sendRedirect(Constants.LOGINPAGE.getValue());
         }else{
@@ -60,7 +69,7 @@ public class UserAuthenticationServices {
 
         System.out.println(userName);
         User user = new User(userName, password, emailId);
-        long userId = Store.getInstance().createUser(user);
+        long userId = getContainer().createUser(user);
         if(userId < 0){
             //User already exits
             //Redirect to register page

@@ -1,9 +1,7 @@
 package services;
 
 import javafx.util.Pair;
-import objects.Store;
-import objects.ToDo;
-import objects.User;
+import objects.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -15,6 +13,13 @@ import java.util.UUID;
 import constants.Constants;
 
 public class Utility {
+    private static AbstractDataStore getContainer(){
+        if(Constants.USEDB.getValue().equals("true")){
+            return DB.getInstance();
+        }else{
+            return Store.getInstance();
+        }
+    }
     public  static Pair<String, String> getUser(HttpServletRequest request){
         String tmpName = "", tmpToken = "";
         Cookie cookies[] = request.getCookies();
@@ -31,7 +36,7 @@ public class Utility {
     public static void main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Pair<String, String> p = getUser(request);
         String tmpName = p.getKey(), tmpToken = p.getValue();
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             response.sendRedirect(Constants.LOGINPAGE.getValue());
             return;
         }

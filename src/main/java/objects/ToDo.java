@@ -44,4 +44,13 @@ public class ToDo {
     public long getId(){ return this.id;}
 
     public String getName(){return this.name;}
+
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public String getUserName(){
+        return this.users.get(0).getUserName();
+    }
+
 }

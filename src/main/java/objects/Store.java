@@ -8,31 +8,17 @@ import java.util.List;
 import java.util.Map;
 import constants.Constants;
 
-public class Store {
+public class Store extends AbstractDataStore{
     private static Store instance = null;
 
     private long userId = 0;
     private long toDoId = 0;
     private Map<String, User> accounts = null;
     private Map<String, String> userToken = null;
-    private List<ToDo> unassigned;
-    private List<ToDo> assigned;
-    private List<ToDo> completed;
-    private List<ToDo> added;
-    private Map<String, ToDo> changedU;
-    private Map<String, ToDo> changedA;
-    private List<Long> deleted;
 
     private Store(){
         this.accounts = new HashMap<String, User>();
         this.userToken = new HashMap<String, String>();
-        this.unassigned = new ArrayList<ToDo>();
-        this.assigned = new ArrayList<ToDo>();
-        this.completed = new ArrayList<ToDo>();
-        this.added = new ArrayList<ToDo>();
-        this.deleted = new ArrayList<Long>();
-        this.changedA = new HashMap<String, ToDo>();
-        this.changedU = new HashMap<String, ToDo>();
     }
 
     public static Store getInstance(){
@@ -105,45 +91,11 @@ public class Store {
     }
 
     public String getToDos(String start){
-        Gson gson = new Gson();
-        String tmp ="";
-        Map<String, Object> map = new HashMap<String, Object>();
-        if(start.equals("1")){
-            map.put(Constants.DEL.getValue(), deleted);
-            map.put(Constants.ADD.getValue(), added);
-            map.put(Constants.CU.getValue(), changedU);
-            map.put(Constants.CA.getValue(), changedA);
-        }else{
-            map.put(Constants.UNASSIGNED.getValue(), unassigned);
-            map.put(Constants.ASSIGNED.getValue(), assigned);
-            map.put(Constants.COMPLETED.getValue(), completed);
-        }
-        tmp = gson.toJson(map);
-        return  tmp;
+        return super.getToDos(start);
     }
 
-    public void clearTmpData(){
-        synchronized(Store.class) {
-            if (deleted.size() > 100)
-                deleted.subList(0, 80).clear();
-            if (added.size() > 100)
-                added.subList(0, 80).clear();
-            if (changedU.size() > 100) {
-                String[] keys = changedU.keySet().toArray(new String[changedU.size()]);
-                for (int i = 0; i < 80; i++) {
-                    changedU.remove(keys[i]);
-                }
-            }
-            if (changedA.size() > 100) {
-                String[] keys = changedA.keySet().toArray(new String[changedA.size()]);
-                for (int i = 0; i < 80; i++) {
-                    changedA.remove(keys[i]);
-                }
-            }
-        }
-    }
 
-    public String getToDo(Long id, String status){
+    /*public String getToDo(Long id, String status){
         Gson gson = new Gson();
         ToDo tmp = new ToDo("","");
         if(status.equals(Constants.UNASSIGNED.getValue())){
@@ -166,7 +118,7 @@ public class Store {
             }
         }
         return  gson.toJson(tmp);
-    }
+    }*/
 
     public boolean deletetodo(long id,String status,String tmpName){
         User user = null;
@@ -203,7 +155,7 @@ public class Store {
         return false;
     }
 
-    public  boolean editTodo(long id,String name, String msg, String username, String status){
+    /*public  boolean editTodo(long id,String name, String msg, String username, String status){
         User user = accounts.get(username);
         if(user == null) return false;
         if(status.equals(Constants.UNASSIGNED.getValue())){
@@ -229,7 +181,7 @@ public class Store {
             }
         }
         return false;
-    }
+    }*/
 
     public boolean assignToDo(long id, String status, String userName){
         User user = null;
@@ -282,8 +234,8 @@ public class Store {
         return true;
     }
 
-    public  boolean getTrue(){
-        return true;
+    public void putCookie(String token, String userName) {
+        getUserTokenMap().put(token,userName);
     }
 
 }

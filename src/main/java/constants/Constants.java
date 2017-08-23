@@ -20,7 +20,8 @@ public enum  Constants {
     JSON("application/json"),
     REGISTERPAGE("register.html"),
     PASSWORD("password"),
-    EMAIL("email");
+    EMAIL("email"),
+    USEDB("true");
 
 
     private String value;

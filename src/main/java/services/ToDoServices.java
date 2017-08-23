@@ -1,9 +1,8 @@
 package services;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import javafx.util.Pair;
-import objects.Store;
-import objects.ToDo;
-import objects.User;
+import objects.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -17,6 +16,17 @@ import constants.Constants;
 import static services.Utility.getUser;
 
 public class ToDoServices {
+
+
+
+    private static AbstractDataStore getContainer(){
+        if(Constants.USEDB.getValue().equals("true")){
+            return DB.getInstance();
+        }else{
+            return Store.getInstance();
+        }
+    }
+
     public static void assigntodo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter(Constants.ID.getValue()));
         String toDoStatus = Constants.UNASSIGNED.getValue();
@@ -25,13 +35,13 @@ public class ToDoServices {
         String tmpName = p.getKey(), tmpToken = p.getValue();
 
 
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             //User not recognised
             response.sendRedirect(Constants.LOGINPAGE.getValue());
             return;
         }
 
-        if(Store.getInstance().assignToDo(id, toDoStatus, tmpName)){
+        if(getContainer().assignToDo(id, toDoStatus, tmpName)){
             response.sendRedirect(Constants.MAINPAGE.getValue());
             return;
         }else {
@@ -46,12 +56,12 @@ public class ToDoServices {
         //long toDoId = Long.parseLong(request.getParameter("toDoId"));
         Pair<String, String> p = getUser(request);
         String tmpName = p.getKey(), tmpToken = p.getValue();
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             //User not recogized
             response.sendRedirect(Constants.LOGINPAGE.getValue());
         }
 
-        if(Store.getInstance().deletetodo(Long.parseLong(arr[0]), arr[1], tmpName)){
+        if(getContainer().deletetodo(Long.parseLong(arr[0]), arr[1], tmpName)){
             //Deletion succeded
             response.sendRedirect(Constants.MAINPAGE.getValue());
         }else{
@@ -65,13 +75,13 @@ public class ToDoServices {
         Pair<String, String> p = getUser(request);
         String tmpName = p.getKey(), tmpToken = p.getValue();
 
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             //User not recognised
             response.sendRedirect(Constants.LOGINPAGE.getValue());
             return;
         }
 
-        if(Store.getInstance().completeToDo(id, Constants.ASSIGNED.getValue(), tmpName)){
+        if(getContainer().completeToDo(id, Constants.ASSIGNED.getValue(), tmpName)){
             ///toDo assigned
             //redirect to main
             response.sendRedirect(Constants.MAINPAGE.getValue());
@@ -90,13 +100,14 @@ public class ToDoServices {
         String tmpName = p.getKey(), tmpToken = p.getValue();
 
 
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             //User not recognised
             response.sendRedirect(Constants.LOGINPAGE.getValue());
             return;
         }
         ToDo toDo = new ToDo(name, msg);
-        long toDoId = Store.getInstance().createToDo(toDo);
+        toDo.addUser(getContainer().findUser(tmpName));
+        long toDoId = getContainer().createToDo(toDo);
 
         if(toDoId < 0){
             ///toDo creation failed todo name already exists
@@ -113,15 +124,15 @@ public class ToDoServices {
         String start = request.getParameter(Constants.START.getValue());
         Pair<String, String> p = getUser(request);
         String tmpName = p.getKey(), tmpToken = p.getValue();
-        if(!Store.getInstance().validateCookie(tmpName, tmpToken)){
+        if(!getContainer().validateCookie(tmpName, tmpToken)){
             //User not recognised
             response.sendRedirect(Constants.LOGINPAGE.getValue());
         }
 
         response.setContentType(Constants.JSON.getValue());
         PrintWriter out = response.getWriter();
-        out.write(Store.getInstance().getToDos(start));
-        Store.getInstance().clearTmpData();
+        out.write(getContainer().getToDos(start));
+        getContainer().clearTmpData();
         out.flush();
     }
 }
